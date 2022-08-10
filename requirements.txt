@@ -1,4 +1,5 @@
 cmake
+dlib
 mmcv
 scipy
 numpy
@@ -8,4 +9,4 @@ Pillow
 torch>=0.4.0
 torchvision
 sklearn
-dlib==18.17.100
+streamlit
