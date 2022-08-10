@@ -1,18 +1,16 @@
-import argparse
 import os
 import sys
 import numpy as np
 import torch
 import torchvision.transforms as transforms
 from PIL import Image
+import global_classifier
 
 from networks.drn_seg import DRNSeg
 from utils.tools import *
 from utils.visualize import *
 
-from distutils.command.upload import upload
 import streamlit as st
-import global_classifier
 
 
 def global_classify(uploaded_file, crop=False):
