@@ -93,7 +93,7 @@ def st_ui():
         label="Upload image",
         type=["jpeg", "jpg", "png"],
         accept_multiple_files=False,
-        help="Upload an image to predict",
+        help="Upload an image to analyze",
     )
     if uploaded_file is not None:
         res = local_classify(uploaded_file)
