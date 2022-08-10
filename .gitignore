@@ -1,3 +1,4 @@
 faldet
 data/val
 weights/*.pth
+out/*
