@@ -14,14 +14,14 @@ import streamlit as st
 
 
 def global_classify(uploaded_file, crop=False):
-  model = global_classifier.load_classifier("weights/global.pth", 0)
+  model = global_classifier.load_classifier("/pebble_tmp/models/global.pth", 0)
   prob = global_classifier.classify_fake(model, uploaded_file, not crop)
   return("Probability being modified by Photoshop FAL: {:.2f}%".format(prob*100))
 
 
 def local_classify(uploaded_file, crop=True):
     dest_folder = 'out/'
-    model_path = 'weights/local.pth'
+    model_path = '/pebble_tmp/models/local.pth'
     gpu_id = 0
     no_crop = not crop
 
