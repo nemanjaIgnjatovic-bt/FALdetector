@@ -6,7 +6,7 @@ numpy
 matplotlib
 opencv_python
 Pillow
-torch==4.3.0
+torch==1.12.1
 torchvision
 sklearn
 streamlit
