@@ -85,8 +85,7 @@ def local_classify(uploaded_file, crop=True):
     return {
         "heatmap": os.path.join(dest_folder, 'heatmap.jpg'),
         "warped": os.path.join(dest_folder, 'warped.jpg'),
-        "cropped_input": os.path.join(dest_folder, 'cropped_input.jpg'),
-        "text": box      
+        "cropped_input": os.path.join(dest_folder, 'cropped_input.jpg')
     }
     
 def st_ui():
@@ -99,9 +98,9 @@ def st_ui():
     if uploaded_file is not None:
         res = local_classify(uploaded_file)
         text = global_classify(uploaded_file)
-        heatmap_text = f"Heatmap -  {text}"
-        st.image(res["heatmap"], caption=heatmap_text)
-        st.image(res["warped"], caption="warped")
+        st.title(text)
+        st.image(res["heatmap"], caption="Heatmap")
+        st.image(res["warped"], caption="Warped")
         st.image(res["cropped_input"], caption="Cropped input")
 
 
