@@ -14,9 +14,10 @@ import streamlit as st
 
 
 def global_classify(uploaded_file, crop=False):
-  model = global_classifier.load_classifier("/pebble_tmp/models/global.pth", 0)
-  prob = global_classifier.classify_fake(model, uploaded_file, not crop)
-  return("Probability being modified by Photoshop FAL: {:.2f}%".format(prob*100))
+    model = global_classifier.load_classifier("/pebble_tmp/models/global.pth", 0)
+    prob = global_classifier.classify_fake(model, uploaded_file, not crop)
+    return("Probability being modified by Photoshop FAL: {:.2f}%".format(prob*100))
+   
 
 
 def local_classify(uploaded_file, crop=True):
@@ -51,7 +52,7 @@ def local_classify(uploaded_file, crop=True):
         faces = face_detection(uploaded_file, verbose=False)
     if len(faces) == 0:
         print("no face detected by dlib, exiting")
-        sys.exit()
+        return {"error": "Couldn't find face on the image"}
     face, box = faces[0]
     face = resize_shorter_side(face, 400)[0]
     face_tens = tf(face).to(device)
@@ -68,7 +69,7 @@ def local_classify(uploaded_file, crop=True):
     reverse_np = warp(modified_np, flow)
     reverse = Image.fromarray(reverse_np)
 
-   
+
     finput = os.path.join(dest_folder, 'cropped_input.jpg')
     fwarped = os.path.join(dest_folder, 'warped.jpg')
     fheat = os.path.join(dest_folder, 'heatmap.jpg')
@@ -79,12 +80,14 @@ def local_classify(uploaded_file, crop=True):
     modified.save(finput, quality=90)
     reverse.save(fwarped, quality=90)
     save_heatmap_cv(modified_np, flow_magn, fheat)
-
     return {
         "heatmap": os.path.join(dest_folder, 'heatmap.jpg'),
         "warped": os.path.join(dest_folder, 'warped.jpg'),
         "cropped_input": os.path.join(dest_folder, 'cropped_input.jpg')
     }
+   
+
+    
     
 def st_ui():
     uploaded_file = st.file_uploader(
@@ -93,13 +96,19 @@ def st_ui():
         accept_multiple_files=False,
         help="Upload an image to analyze",
     )
-    if uploaded_file is not None:
-        res = local_classify(uploaded_file)
-        text = global_classify(uploaded_file)
-        st.title(text)
-        st.image(res["heatmap"], caption="Heatmap")
-        st.image(res["warped"], caption="Warped")
-        st.image(res["cropped_input"], caption="Cropped input")
+    if uploaded_file:
+        with st.spinner(text="Analysing image"):
+            if uploaded_file is not None:
+                res = local_classify(uploaded_file)
+                has_error = res.get('error', None)
+                if has_error is not None:
+                    st.title(res['error'])
+                else:
+                    text = global_classify(uploaded_file)
+                    st.title(text)
+                    st.image(res["heatmap"], caption="Heatmap")
+                    st.image(res["warped"], caption="Warped")
+                    st.image(res["cropped_input"], caption="Cropped input")
 
 
 if __name__ == "__main__":
