@@ -97,7 +97,7 @@ def st_ui():
         help="Upload an image to analyze",
     )
     if uploaded_file:
-        with st.spinner(text="Analysing image"):
+        with st.spinner(text="Analyzing image"):
             if uploaded_file is not None:
                 res = local_classify(uploaded_file)
                 has_error = res.get('error', None)
