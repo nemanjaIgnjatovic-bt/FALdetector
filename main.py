@@ -23,7 +23,7 @@ def global_classify(uploaded_file, crop=False):
 def local_classify(uploaded_file, crop=True):
     dest_folder = 'out/'
     model_path = '/pebble_tmp/models/local.pth'
-    gpu_id = -1
+    gpu_id = 0
     no_crop = not crop
 
     # Loading the model
