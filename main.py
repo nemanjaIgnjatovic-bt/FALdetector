@@ -20,7 +20,9 @@ def global_classify(uploaded_file, crop=False):
    
 def test_write():
     dest_folder = 'out/'
-    os.path.join(dest_folder, 'test.jpg')
+    test_file = os.path.join(dest_folder, 'copy.txt')
+    with open(test_file, "w") as file:
+        file.write("Test")
 
 
 def local_classify(uploaded_file, crop=True):
