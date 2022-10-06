@@ -30,7 +30,11 @@ def local_classify(uploaded_file, crop=True):
     # if torch.cuda.is_available():
     #     device = 'cuda:{}'.format(gpu_id)
     # else:
-    device = 'cpu'
+    #     device = 'cpu'
+
+
+    device = 'cuda:{}'.format(gpu_id)
+
 
     model = DRNSeg(2)
     state_dict = torch.load(model_path, map_location=device)
