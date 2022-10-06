@@ -17,21 +17,9 @@ def global_classify(uploaded_file, crop=False):
     model = global_classifier.load_classifier("/pebble_tmp/models/global.pth", 0)
     prob = global_classifier.classify_fake(model, uploaded_file, not crop)
     return("Probability being modified by Photoshop FAL: {:.2f}%".format(prob*100))
-   
-def test_write():
-    save_path = '/out'
-    file_name = "test.txt"
-
-    completeName = os.path.join(save_path, file_name)
-
-    file1 = open(completeName, "w")
-    file1.write("file information")
-    file1.close()
-
 
 
 def local_classify(uploaded_file, crop=True):
-    test_write()
     dest_folder = 'out/'
     model_path = '/pebble_tmp/models/local.pth'
     gpu_id = 0
