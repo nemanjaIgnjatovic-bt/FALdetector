@@ -23,18 +23,14 @@ def global_classify(uploaded_file, crop=False):
 def local_classify(uploaded_file, crop=True):
     dest_folder = 'out/'
     model_path = '/pebble_tmp/models/local.pth'
-    gpu_id = 0
+    gpu_id = -1
     no_crop = not crop
 
     # Loading the model
-    # if torch.cuda.is_available():
-    #     device = 'cuda:{}'.format(gpu_id)
-    # else:
-    #     device = 'cpu'
-
-
-    device = 'cuda:{}'.format(gpu_id)
-
+    if torch.cuda.is_available():
+        device = 'cuda:{}'.format(gpu_id)
+    else:
+        device = 'cpu'
 
     model = DRNSeg(2)
     state_dict = torch.load(model_path, map_location=device)
